@@ -1,0 +1,342 @@
+"use client";
+
+import { useActionState, useEffect, useRef } from "react";
+import Link from "next/link";
+
+import {
+  initialFormState,
+  mergeForm,
+  useForm,
+  useTransform,
+} from "@tanstack/react-form-nextjs";
+import { toast } from "sonner";
+import { Mail, Loader2, Send } from "lucide-react";
+
+import { messageFormOptions, MessageSchema } from "@/lib/objects";
+import { AddMessage } from "@/actions/message";
+import { Github, Linkedin } from "@/lib/brand-icons";
+
+export default function Form() {
+  const resetRef = useRef<() => void>(null);
+
+  const [state, action, isPending] = useActionState(
+    async (prevState: unknown, formData: FormData) => {
+      const res = await AddMessage(prevState, formData);
+      if (res && typeof res === "object" && "status" in res) {
+        if (res.status !== 200) {
+          res.message.forEach((msg: string) =>
+            toast.error(msg, { duration: 3000 }),
+          );
+        } else {
+          toast.success(res.message[0], { duration: 3000 });
+          resetRef.current?.();
+        }
+      }
+      return res;
+    },
+    initialFormState,
+  );
+
+  const { Field, Subscribe, handleSubmit, reset } = useForm({
+    ...messageFormOptions,
+    onSubmitInvalid: ({ formApi }) => {
+      formApi.state.errors.forEach((error) => {
+        let msg: unknown;
+        if (typeof error === "string") {
+          msg = error;
+        } else if (
+          typeof error === "object" &&
+          error !== null &&
+          "message" in error
+        ) {
+          msg = (error as Record<string, unknown>).message;
+        }
+        if (typeof msg === "string") toast.error(msg, { duration: 3000 });
+      });
+    },
+    transform: useTransform(
+      (baseForm) => {
+        if (state && typeof state === "object" && !("status" in state)) {
+          return mergeForm(baseForm, state as Parameters<typeof mergeForm>[1]);
+        }
+        return baseForm;
+      },
+      [state],
+    ),
+  });
+
+  // Keep a fresh reference to reset
+  useEffect(() => {
+    resetRef.current = reset;
+  }, [reset]);
+
+  return (
+    <div className="mx-auto grid w-full grid-cols-1 gap-4 rounded-2xl border border-white/5 bg-neutral-900/40 p-2 shadow-2xl backdrop-blur-xl sm:gap-8 sm:p-4 lg:grid-cols-2">
+      <div className="relative flex flex-col justify-center rounded-2xl border border-white/5 bg-neutral-950/40 p-5 sm:p-12">
+        <div className="mx-auto max-w-xl lg:mx-0 lg:max-w-lg">
+          <h1 className="text-3xl font-bold tracking-tight text-white">
+            Entre em contacto
+          </h1>
+          <p className="mt-6 text-lg leading-8 text-balance text-white">
+            Tem uma pergunta, sugestão ou quer falar sobre um projeto? Pode
+            contactar-me pelos canais abaixo ou enviar uma mensagem diretamente.
+          </p>
+          <dl className="mt-10 space-y-4 text-base leading-7 text-gray-600">
+            <div className="group/link relative flex items-center rounded-xl border border-white/5 bg-white/5 p-3 transition-[transform,border-color] duration-300 hover:scale-[1.02] hover:border-emerald-500/30">
+              <Link
+                href="mailto:your-email@example.com"
+                target="_blank"
+                className="absolute inset-0 z-10"
+              >
+                <span className="sr-only">Email: your-email@example.com</span>
+              </Link>
+              <dt className="flex h-10 w-10 flex-none items-center justify-center rounded-lg border border-white/5 bg-neutral-900 transition-colors duration-200 group-hover/link:border-emerald-500/50 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none sm:h-12 sm:w-12">
+                <span className="sr-only">Email</span>
+                <Mail className="h-5 w-5 text-emerald-400 sm:h-6 sm:w-6" />
+              </dt>
+              <dd className="ml-4 min-w-0">
+                <div className="truncate text-sm font-medium text-white transition-colors group-hover/link:text-emerald-300 sm:text-base">
+                  your-email@example.com
+                </div>
+              </dd>
+            </div>
+
+            <div className="group/link relative flex items-center rounded-xl border border-white/5 bg-white/5 p-3 transition-[transform,border-color] duration-300 hover:scale-[1.02] hover:border-blue-500/30">
+              <Link
+                href="https://github.com/your-github-username"
+                target="_blank"
+                className="absolute inset-0 z-10"
+              >
+                <span className="sr-only">Visit Github profile</span>
+              </Link>
+              <dt className="flex h-10 w-10 flex-none items-center justify-center rounded-lg border border-white/5 bg-neutral-900 transition-colors duration-200 group-hover/link:border-blue-500/50 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none sm:h-12 sm:w-12">
+                <span className="sr-only">Github</span>
+                <Github className="h-5 w-5 text-blue-400 sm:h-6 sm:w-6" />
+              </dt>
+              <dd className="ml-4 min-w-0">
+                <div className="truncate text-sm font-medium text-white transition-colors group-hover/link:text-blue-300 sm:text-base">
+                  your-github-username
+                </div>
+              </dd>
+            </div>
+
+            <div className="group/link relative flex items-center rounded-xl border border-white/5 bg-white/5 p-3 transition-[transform,border-color] duration-300 hover:scale-[1.02] hover:border-sky-500/30">
+              <Link
+                href="https://linkedin.com/in/your-linkedin"
+                target="_blank"
+                className="absolute inset-0 z-10"
+              >
+                <span className="sr-only">Visit Linkedin profile</span>
+              </Link>
+              <dt className="flex h-10 w-10 flex-none items-center justify-center rounded-lg border border-white/5 bg-neutral-900 transition-colors duration-200 group-hover/link:border-sky-500/50 focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:outline-none sm:h-12 sm:w-12">
+                <span className="sr-only">Linkedin</span>
+                <Linkedin className="h-5 w-5 text-sky-400 sm:h-6 sm:w-6" />
+              </dt>
+              <dd className="ml-4 min-w-0">
+                <div className="truncate text-sm font-medium text-white transition-colors group-hover/link:text-sky-300 sm:text-base">
+                  your-linkedin
+                </div>
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+
+      <form
+        action={action as never}
+        onSubmit={() => handleSubmit()}
+        className="flex flex-col justify-center p-5 sm:p-10 lg:p-12"
+      >
+        <div className="mx-auto w-full max-w-xl lg:max-w-none">
+          <div className="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2 sm:gap-y-6">
+            <Field
+              name="name"
+              validators={{
+                onChange: ({ value }) => {
+                  const res = MessageSchema.shape.name.safeParse(value);
+                  return !res.success ? res.error.issues[0].message : undefined;
+                },
+              }}
+            >
+              {(field) => {
+                const hasError = field.state.meta.errors.length > 0;
+                return (
+                  <div className="sm:col-span-2">
+                    <label
+                      htmlFor={field.name}
+                      className="block text-sm leading-6 font-semibold text-white/75"
+                    >
+                      Name
+                    </label>
+                    <div className="mt-2.5">
+                      <input
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value ?? ""}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        type="text"
+                        autoComplete="name"
+                        placeholder="Your name…"
+                        className={`block w-full rounded-xl border-0 bg-neutral-950/50 px-4 py-3 text-white shadow-xs outline-hidden transition-[background-color,border-color,box-shadow] duration-200 focus-visible:outline-none sm:text-sm sm:leading-6 ${
+                          hasError
+                            ? "bg-red-950/20 ring-2 ring-red-500 focus-visible:ring-2 focus-visible:ring-red-500"
+                            : "ring-1 ring-white/10 ring-inset focus:bg-white/5 focus-visible:ring-2 focus-visible:ring-emerald-500/50"
+                        }`}
+                      />
+                      {field.state.meta.errors.map((error) => (
+                        <p
+                          key={error as string}
+                          className="mt-2 text-sm text-red-400"
+                        >
+                          {error as string}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                );
+              }}
+            </Field>
+
+            <Field
+              name="email"
+              validators={{
+                onChange: ({ value }) => {
+                  const res = MessageSchema.shape.email.safeParse(value);
+                  return !res.success ? res.error.issues[0].message : undefined;
+                },
+              }}
+            >
+              {(field) => {
+                const hasError = field.state.meta.errors.length > 0;
+                return (
+                  <div className="sm:col-span-2">
+                    <label
+                      htmlFor={field.name}
+                      className="block text-sm leading-6 font-semibold text-white/75"
+                    >
+                      Email
+                    </label>
+                    <div className="mt-2.5">
+                      <input
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value ?? ""}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        type="email"
+                        autoComplete="email"
+                        spellCheck={false}
+                        placeholder="you@example.com…"
+                        className={`block w-full rounded-xl border-0 bg-neutral-950/50 px-4 py-3 text-white shadow-xs outline-hidden transition-[background-color,border-color,box-shadow] duration-200 focus-visible:outline-none sm:text-sm sm:leading-6 ${
+                          hasError
+                            ? "bg-red-950/20 ring-2 ring-red-500 focus-visible:ring-2 focus-visible:ring-red-500"
+                            : "ring-1 ring-white/10 ring-inset focus:bg-white/5 focus-visible:ring-2 focus-visible:ring-emerald-500/50"
+                        }`}
+                      />
+                      {field.state.meta.errors.map((error) => (
+                        <p
+                          key={error as string}
+                          className="mt-2 text-sm text-red-400"
+                        >
+                          {error as string}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                );
+              }}
+            </Field>
+
+            <Field
+              name="message"
+              validators={{
+                onChange: ({ value }) => {
+                  const res = MessageSchema.shape.message.safeParse(value);
+                  return !res.success ? res.error.issues[0].message : undefined;
+                },
+              }}
+            >
+              {(field) => {
+                const hasError = field.state.meta.errors.length > 0;
+                return (
+                  <div className="sm:col-span-2">
+                    <label
+                      htmlFor={field.name}
+                      className="block text-sm leading-6 font-semibold text-white/75"
+                    >
+                      Message
+                    </label>
+                    <div className="mt-2.5">
+                      <textarea
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        rows={4}
+                        placeholder="Write your message…"
+                        className={`block w-full resize-none rounded-xl border-0 bg-neutral-950/50 px-4 py-3 text-white shadow-xs outline-hidden transition-[background-color,border-color,box-shadow] duration-200 focus-visible:outline-none sm:text-sm sm:leading-6 ${
+                          hasError
+                            ? "bg-red-950/20 ring-2 ring-red-500 focus-visible:ring-2 focus-visible:ring-red-500"
+                            : "ring-1 ring-white/10 ring-inset focus:bg-white/5 focus-visible:ring-2 focus-visible:ring-emerald-500/50"
+                        }`}
+                      />
+                      {field.state.meta.errors.map((error) => (
+                        <p
+                          key={error as string}
+                          className="mt-2 text-sm text-red-400"
+                        >
+                          {error as string}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                );
+              }}
+            </Field>
+          </div>
+          <div className="mt-8 flex flex-col items-end gap-6">
+            <div className="group relative">
+              <Subscribe
+                selector={(formState) => [
+                  formState.canSubmit,
+                  formState.isSubmitting,
+                ]}
+              >
+                {([canSubmit, isSubmitting]) => {
+                  const loading = isSubmitting || isPending;
+                  return (
+                    <>
+                      <button
+                        type="submit"
+                        disabled={!canSubmit || loading}
+                        className={`relative w-full overflow-hidden rounded-xl px-6 py-3 text-lg font-bold transition-[transform,box-shadow,border-color,background-color] duration-200 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:outline-none sm:w-auto ${
+                          loading || !canSubmit
+                            ? "cursor-not-allowed border border-white/5 bg-neutral-900 text-white/40"
+                            : "border border-white/10 bg-neutral-900 text-white shadow-lg hover:-translate-y-0.5 hover:border-emerald-500/50 hover:bg-white/5 hover:shadow-[0_0_20px_rgba(16,185,129,0.15)] active:scale-[0.97]"
+                        }`}
+                      >
+                        {loading ? (
+                          <div className="flex items-center justify-center gap-x-2">
+                            <Loader2 className="size-5 animate-spin" />
+                            Sending…
+                          </div>
+                        ) : (
+                          <div className="flex items-center justify-center gap-x-2">
+                            <Send className="size-5" />
+                            Send Message
+                          </div>
+                        )}
+                      </button>
+                    </>
+                  );
+                }}
+              </Subscribe>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+}
