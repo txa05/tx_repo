@@ -9,7 +9,7 @@ import ProjectGrid from "@/components/pages/projects/Grid";
 import { GetProjects } from "@/data/projects";
 
 export const metadata: Metadata = {
-  title: "Início",
+  title: "Tx - Portfólio",
   description:
     "Portfólio de Tx: projetos, tecnologias e experiência prática em desenvolvimento de software.",
 };
