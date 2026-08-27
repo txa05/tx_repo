@@ -17,21 +17,21 @@ const navigation = [
   },
   {
     name: "LinkedIn",
-    href: "https://linkedin.com/in/your-linkedin",
+    href: "https://linkedin.com/in/tchiade-estevão-xavier-b701222b2",
     icon: (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => (
       <Linkedin {...props} />
     ),
   },
   {
     name: "GitHub",
-    href: "https://github.com/your-github-username",
+    href: "https://github.com/txa05",
     icon: (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => (
       <Github {...props} />
     ),
   },
   {
     name: "Mail",
-    href: "mailto:your-email@example.com",
+    href: "mailto:tchiadeestevaox@gmail.com",
     icon: (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => (
       <Mail {...props} />
     ),

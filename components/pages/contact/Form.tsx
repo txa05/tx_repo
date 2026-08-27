@@ -84,7 +84,7 @@ export default function Form() {
           <dl className="mt-10 space-y-4 text-base leading-7 text-gray-600">
             <div className="group/link relative flex items-center rounded-xl border border-white/5 bg-white/5 p-3 transition-[transform,border-color] duration-300 hover:scale-[1.02] hover:border-emerald-500/30">
               <Link
-                href="mailto:your-email@example.com"
+                href="mailto:tchiadeestevaox@gmail.com"
                 target="_blank"
                 className="absolute inset-0 z-10"
               >
@@ -96,14 +96,14 @@ export default function Form() {
               </dt>
               <dd className="ml-4 min-w-0">
                 <div className="truncate text-sm font-medium text-white transition-colors group-hover/link:text-emerald-300 sm:text-base">
-                  your-email@example.com
+                  tchiadeestevaox@gmail.com
                 </div>
               </dd>
             </div>
 
             <div className="group/link relative flex items-center rounded-xl border border-white/5 bg-white/5 p-3 transition-[transform,border-color] duration-300 hover:scale-[1.02] hover:border-blue-500/30">
               <Link
-                href="https://github.com/your-github-username"
+                href="https://github.com/txa05"
                 target="_blank"
                 className="absolute inset-0 z-10"
               >
@@ -115,14 +115,14 @@ export default function Form() {
               </dt>
               <dd className="ml-4 min-w-0">
                 <div className="truncate text-sm font-medium text-white transition-colors group-hover/link:text-blue-300 sm:text-base">
-                  your-github-username
+                  txa05
                 </div>
               </dd>
             </div>
 
             <div className="group/link relative flex items-center rounded-xl border border-white/5 bg-white/5 p-3 transition-[transform,border-color] duration-300 hover:scale-[1.02] hover:border-sky-500/30">
               <Link
-                href="https://linkedin.com/in/your-linkedin"
+                href="https://linkedin.com/in/tchiade-estevão-xavier-b701222b2"
                 target="_blank"
                 className="absolute inset-0 z-10"
               >
@@ -134,7 +134,7 @@ export default function Form() {
               </dt>
               <dd className="ml-4 min-w-0">
                 <div className="truncate text-sm font-medium text-white transition-colors group-hover/link:text-sky-300 sm:text-base">
-                  your-linkedin
+                  Tchiade Estevão Xavier
                 </div>
               </dd>
             </div>
@@ -177,7 +177,7 @@ export default function Form() {
                         onChange={(e) => field.handleChange(e.target.value)}
                         type="text"
                         autoComplete="name"
-                        placeholder="Your name…"
+                        placeholder="seu nome..."
                         className={`block w-full rounded-xl border-0 bg-neutral-950/50 px-4 py-3 text-white shadow-xs outline-hidden transition-[background-color,border-color,box-shadow] duration-200 focus-visible:outline-none sm:text-sm sm:leading-6 ${
                           hasError
                             ? "bg-red-950/20 ring-2 ring-red-500 focus-visible:ring-2 focus-visible:ring-red-500"
@@ -227,7 +227,7 @@ export default function Form() {
                         type="email"
                         autoComplete="email"
                         spellCheck={false}
-                        placeholder="you@example.com…"
+                        placeholder="exemplo@gmail.com…"
                         className={`block w-full rounded-xl border-0 bg-neutral-950/50 px-4 py-3 text-white shadow-xs outline-hidden transition-[background-color,border-color,box-shadow] duration-200 focus-visible:outline-none sm:text-sm sm:leading-6 ${
                           hasError
                             ? "bg-red-950/20 ring-2 ring-red-500 focus-visible:ring-2 focus-visible:ring-red-500"
@@ -275,7 +275,7 @@ export default function Form() {
                         onBlur={field.handleBlur}
                         onChange={(e) => field.handleChange(e.target.value)}
                         rows={4}
-                        placeholder="Write your message…"
+                        placeholder="Sua mensagem…"
                         className={`block w-full resize-none rounded-xl border-0 bg-neutral-950/50 px-4 py-3 text-white shadow-xs outline-hidden transition-[background-color,border-color,box-shadow] duration-200 focus-visible:outline-none sm:text-sm sm:leading-6 ${
                           hasError
                             ? "bg-red-950/20 ring-2 ring-red-500 focus-visible:ring-2 focus-visible:ring-red-500"
@@ -325,7 +325,7 @@ export default function Form() {
                         ) : (
                           <div className="flex items-center justify-center gap-x-2">
                             <Send className="size-5" />
-                            Send Message
+                            Enviar mensagem
                           </div>
                         )}
                       </button>

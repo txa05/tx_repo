@@ -5,12 +5,12 @@ export const MessageSchema = z.object({
   name: z
     .string()
     .trim()
-    .min(3, { error: "Name must be at least 3 characters." }),
-  email: z.email({ error: "Invalid email address" }),
+    .min(3, { error: "O nome deve ter pelo menos 3 caracteres." }),
+  email: z.email({ error: "Endereço de email inválido." }),
   message: z
     .string()
     .trim()
-    .min(3, { error: "Message must be at least 3 characters." }),
+    .min(3, { error: "A mensagem deve ter pelo menos 3 caracteres." }),
 });
 export type Message = z.infer<typeof MessageSchema>;
 
