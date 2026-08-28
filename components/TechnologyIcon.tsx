@@ -67,6 +67,8 @@ const technologyIcons: Record<string, LucideIcon> = {
   valgrind: Cpu,
   "vs code": Code2,
   linux: Cpu,
+  nginx: Server,
+  wordpress: Server,
 };
 
 const technologyImageSources: Record<string, string> = {
@@ -91,6 +93,7 @@ const technologyImageSources: Record<string, string> = {
   jwt: "/icons/jwt.svg",
   "rest apis": "/icons/restapi.png",
   "node js": "/icons/nodejs.png",
+  nginx: "/icons/nginx.png",
 };
 
 export default function TechnologyIcon({ technology, className }: Props) {

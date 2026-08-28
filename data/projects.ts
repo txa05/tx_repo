@@ -51,6 +51,8 @@ const projects: ProjectsResponse["projects"] = [
     technologies: [
       technology(22, "Docker"),
       technology(23, "Docker Compose"),
+      technology(24, "Nginx"),
+      technology(25, "WordPress"),
       technology(10, "MariaDB"),
     ],
   },
