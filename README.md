@@ -23,5 +23,4 @@ MAIL_FROM=
 MAIL_TO=
 ```
 
-Antes de publicar, substitua os placeholders de GitHub, LinkedIn, Instagram, email e domínio presentes no código.
 # tx_repo
