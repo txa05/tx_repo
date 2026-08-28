@@ -4,9 +4,9 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 const navItems = [
-  { href: "/", label: "Home", activeColor: "blue" },
+  { href: "/", label: "Início", activeColor: "blue" },
   { href: "/projects", label: "Projetos", activeColor: "emerald" },
-  { href: "/contact", label: "Contacto", activeColor: "sky" },
+  { href: "/contact", label: "Contactos", activeColor: "sky" },
 ] as const;
 
 const colorMap = {
@@ -30,11 +30,12 @@ const colorMap = {
 
 export default function Navbar() {
   const pathname = usePathname();
-  const page = pathname.slice(1);
+  const currentPath = pathname.replace(/\/+$/, "") || "/";
+  const activeItem = navItems.find((item) => item.href === currentPath);
+  const page = currentPath.slice(1);
   const name =
-    page === "" ? "Início" : page.charAt(0).toUpperCase() + page.slice(1);
-
-  const activeItem = navItems.find((item) => item.href === pathname);
+    activeItem?.label ??
+    (page === "" ? "Início" : page.charAt(0).toUpperCase() + page.slice(1));
   const activeStyle = activeItem
     ? colorMap[activeItem.activeColor].active
     : "bg-neutral-900/80 text-blue-100";
@@ -52,7 +53,7 @@ export default function Navbar() {
           </div>
           <div className="flex w-full flex-1 items-center justify-between overflow-x-auto sm:w-auto sm:justify-end sm:gap-8 sm:overflow-visible">
             {navItems.map((item) => {
-              const isActive = pathname === item.href;
+              const isActive = currentPath === item.href;
               const colors = colorMap[item.activeColor];
               return (
                 <div
