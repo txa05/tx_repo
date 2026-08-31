@@ -18,12 +18,10 @@ export async function GetExperiences(): Promise<ExperiencesResponse> {
               "Desenvolvimento de projetos práticos envolvendo programação em C e C++, sistemas Linux, redes, processos, threads, shell, desenvolvimento web, bases de dados e infraestrutura.",
             projects: [
               { id: 1, name: "Minishell" },
-              { id: 2, name: "Push_swap" },
               { id: 3, name: "Philosophers" },
               { id: 4, name: "Cub3D" },
               { id: 5, name: "ft_inception" },
               { id: 6, name: "PlayIt" },
-              { id: 7, name: "Karma Store" },
               { id: 8, name: "Backend / API" },
             ],
           },

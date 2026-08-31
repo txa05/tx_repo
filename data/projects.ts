@@ -19,14 +19,6 @@ const projects: ProjectsResponse["projects"] = [
     ],
   },
   {
-    id: 2,
-    name: "Push_swap",
-    description:
-      "Projeto de algoritmos em C para ordenação com um conjunto limitado de operações sobre stacks, explorando estruturas de dados e a otimização do número de operações.",
-    featured: true,
-    technologies: [technology(1, "C")],
-  },
-  {
     id: 3,
     name: "Philosophers",
     description:

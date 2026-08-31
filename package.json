@@ -51,5 +51,13 @@
   ],
   "optionalDependencies": {
     "@tailwindcss/oxide-linux-x64-gnu": "^4.3.3"
-  }
+  },
+  "description": "Portfólio pessoal de Tx, desenvolvido com Next.js, React e Tailwind CSS.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
